@@ -4,6 +4,7 @@ Events and methods
         Event Handling
         Event Listening
         Event Modifiers e.g right., enter, left, prevent, stop, once, capture, self, passive etc
+        
 
 Vue Js Components
 Vue Js Filters

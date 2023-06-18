@@ -52,15 +52,70 @@
             }
         })
         app.component('login-form', {
+            // v-model is used to bind data to an input field
             template: `
-                <div>
-                    <input type="email" />
-                    <input type="password" />
-                    // <button>Submit</button>
-
+                <form @submit.prevent="handleSubmit">
+                    <h3>{{ title }}</h3>
+                    <custom-input v-model="email"  :label="emailLabel" /> <!-- v-bind is used to bind data to an attribute -->
+                    <custom-input v-model="password" :label="passwordLabel" />
+                    <button>Login</button>
                 <div/>
+            `,
+            // creating a component array to be used in the login form
+            components: ['custom-input'],
+            data() {
+                return {
+                    title: 'Login Form',
+                    email: '',
+                    password: '',
+                    emailLabel: 'Email',
+                    passwordLabel: 'Password',
+
+                }
+            }, 
+            methods: {
+                handleSubmit(e) {
+                    e.preventDefault();
+                    console.log('Form Submitted', this.email, this.password)
+                }
+            }
+        })
+        app.component('custom-input', {
+            template: 
+            // {{ label }}  label is a prop that is passed from the parent component to the child component and is usable after the prop is declared in the props array
+
             `
-        }) 
+                <label>
+                    {{ label }}
+                    <input type="text" v-model="inputValue" />
+                <label/>
+            `,
+            props: ['label', 'modelValue'], // props are used to pass data from a parent component to a child component
+            // computed is an object of functions that can be used to compute data in vue js 
+            computed : {
+                inputValue: {
+                    get() {
+                        return this.modelValue
+                    },
+
+                    set(value) {
+                        console.log('input value changed', value)
+
+                        // $emit is used to emit an event from a child component to a parent component
+                        this.$emit('update:modelValue', value) // v-model listens to update and updates the values of the variables
+
+                    }
+                }
+
+            },
+            
+            // data() {
+            //     return {
+            //         inputValue : ''
+            //     }
+            // }
+        
+        })
         app.mount('#app')
     </script>
 </body>
