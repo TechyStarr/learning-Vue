@@ -56,9 +56,10 @@
             template: `
                 <form @submit.prevent="handleSubmit">
                     <h3>{{ title }}</h3>
-                    <p v-for="str in inputs" :key="str">{{ str }} <p/>   <!-- accessing the variables in inputs array -->
-                    <custom-input v-model="email"  :label="emailLabel" /> <!-- v-bind is used to bind data to an attribute -->
-                    <custom-input v-model="password" :label="passwordLabel" />
+                    <custom-input 
+                    v for="(input, i) in inputs" :key="i"
+                    v-model="email"  
+                    :label="emailLabel" /> <!-- v-bind is used to bind data to an attribute -->
                     <button>Login</button>
                 <div/>
             `,
@@ -68,15 +69,17 @@
                 return {
                     title: 'Login Form',
                     inputs: [
-                        'email',
-                        'password',
-                        'name'
-
+                        {
+                            label: 'Email',
+                            value: '',
+                            type: 'Email',
+                        },
+                        {
+                            label: 'Password',
+                            value: '',
+                            type: 'Password',
+                        }
                     ],
-                    email: '',
-                    password: '',
-                    emailLabel: 'Email',
-                    passwordLabel: 'Password',
 
                 }
             }, 
